@@ -1,16 +1,25 @@
 version: '3.7'
 
 services:
-  broker:
-    build: ./broker
-    container_name: broker
+  broker_free:
+    build: ./broker_free
+    container_name: broker_free
     restart: always
     volumes:
-      - mosquitto_data:/mosquitto
+      - mosquitto_data_free:/mosquitto
     ports:
       - 1883:1883
 
+  broker_auth:
+    build: ./broker_auth
+    container_name: broker_auth
+    restart: always
+    volumes:
+      - ./broker_auth/data/:/mosquitto/data/ 
+      - ./broker_auth/log/:/mosquitto/log/
+    ports:
+      - 1884:1883
 
 volumes:
-  mosquitto_data:
+  mosquitto_data_free:
     driver: local
